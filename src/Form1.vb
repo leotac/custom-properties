@@ -337,6 +337,7 @@ Public Class FilePropDemo
 
         ToolTip1.SetToolTip(lbFileName, fileList)
         ToolTip1.AutoPopDelay = 10000
+        Return True
     End Function
 
 
@@ -431,25 +432,6 @@ Public Class FilePropDemo
         GetLvItemForProperty = lvItem
     End Function
 
-    ' GetIconImageFromDisp:
-    '  Helper function to take PictureDisp and create GDI+ Bitmap Image for 
-    '  the file icon to display in WinForm PictureBox...
-    Private Function GetIconImageFromDisp(ByVal oDispPicture As Object) As System.Drawing.Image
-        Dim iType As Integer
-        Dim iHandle As Integer
-        Dim args() As Object
-        Try
-            ' Confirm that object contains an ICON picture...
-            iType = CLng(oDispPicture.GetType.InvokeMember("Type", Reflection.BindingFlags.GetProperty, Nothing, oDispPicture, args))
-            If iType = 3 Then ' If So, ask for the handle...
-                iHandle = oDispPicture.GetType.InvokeMember("Handle", Reflection.BindingFlags.GetProperty, Nothing, oDispPicture, args)
-                ' Create the Drawing.Bitmap object from the ICON handle...
-                GetIconImageFromDisp = System.Drawing.Bitmap.FromHicon(New System.IntPtr(iHandle))
-            End If
-        Catch ex As Exception
-            ' Return Nothing if exception thrown..
-        End Try
-    End Function
 
     ' cmdOpen_Click: Handler for Open Button
     Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
